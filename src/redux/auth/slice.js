@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {toast} from 'react-hot-toast'
+
 import { register, login, logout, refreshUser } from '../auth/operations'
 
 function errorHandler() {
-    toast('Спробуйте ще раз.', { style: {backgroundColor: 'rgb(83, 83, 139)'}})
+    toast('Oops, try again', { style: {backgroundColor: 'red'}})
 }
 
 function loadingHandler() {
+    // toast('Loading...', { style: {backgroundColor: 'teal'}})
 }
 
 function resetItems(state) {
@@ -33,6 +35,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true
       })
       .addCase(register.rejected, errorHandler)
+
       .addCase(login.pending, loadingHandler)
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user
@@ -40,8 +43,9 @@ const authSlice = createSlice({
         state.isLoggedIn = true
       })
       .addCase(login.rejected, () => {
-        toast('Вказаного Еmail-а не знайдено, або Ви вказали не вырний пароль', {duration: 3000, style: {backgroundColor: 'rgb(83, 83, 139)'}})
+        toast('Probably there are no user with such email, or the password is wrong', {duration: 3000, style: {backgroundColor: 'red'}})
       })
+      
       .addCase(logout.pending, loadingHandler)
       .addCase(logout.fulfilled, (state) => {
         state.user = {name: null, email: null,}
