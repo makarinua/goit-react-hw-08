@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {toast} from 'react-hot-toast'
-
 import { register, login, logout, refreshUser } from '../auth/operations'
 
 function errorHandler() {
